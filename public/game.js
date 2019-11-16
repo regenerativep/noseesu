@@ -7,6 +7,7 @@ var activeNotes = [];
 var startTime;
 var currentTime;
 var ding;
+var dang;
 
 var threshold = 100; //Millisecond error threshold for pressing the note in time
 var score = 0;
@@ -15,6 +16,7 @@ function preload()
 {
     soundFormats("mp3");
     ding = loadSound("Sounds/Pitches/C.mp3");
+    dang = loadSound("Sounds/Pitches/dang.mp3")
     console.log("preloaded");
 }
 
@@ -71,6 +73,9 @@ function keyPressed()
             score++;
             activeNotes.splice(0, 1);
 
+        }else{
+            score--;
+            activeNotes.splice(0,1);
         }
     }
 }
