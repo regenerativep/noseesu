@@ -11,11 +11,11 @@ void setup()
   currentPitch = 0;
   maxPitch = 11;
   currentTime = 0;
-  float bpm = 120;
+  float bpm = 240;
   timeJump = (1000 * 60) / bpm;
   noteList = new ArrayList<Note>();
-  columnWidth = 16;
-  rowHeight = 16;
+  columnWidth = 24;
+  rowHeight = 12;
   leftPressed = false;
   prevLeftPressed = false;
   rightPressed = false;
