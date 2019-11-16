@@ -4,6 +4,7 @@ var C;
 var hearDistance = 2000;
 var hitDistance = 100;
 var noteList = [];
+var startTime;
 var currentTime;
 var C;
 
@@ -18,15 +19,17 @@ function setup()
 {
     createCanvas(800,400);
     background(0,0,0);
+    startTime = millis(); //change this to wheneveer the actual game starts
 }
 
 function draw()
 {
+    currentTime = millis() - startTime;
     for(let i = 0; i < noteList.length; i++)
     {
         note = noteList[i];
         let panning = map(note.time, currentTime, currentTime+hearDistance, -1.0, 1.0); //left to right panning
-        let sound = loadSound('pitches/'+note.pitch+'.mp3');
+        let sound = loadSound('Sounds/Pitches/'+note.pitch+'.mp3');
         ellipse(width*(panning+1.0)/2, height/2, 80, 80);
         sound.pan(panning);
         sound.play();
