@@ -56,8 +56,17 @@ function draw()
 
 function keyPressed()
 {
-    C.play();
-    ellipse(0,20,40,40);
+    if (keyCode == 32) {
+        C.play(); 
+        for (var i = 0; i < 1000; i++) {
+            console.log(i);
+            C.pan(i/500 - 1.0);
+            fill(0);
+            ellipse(i,20,40,40);
+            fill(255);
+            ellipse(i,20,40,40);
+        }
+    }
 }
 
 function loadMap(jsonStr)
