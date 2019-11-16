@@ -26,16 +26,19 @@ function draw()
     {
         note = noteList[i];
         let panning = map(note.time, currentTime, currentTime+hearDistance, -1.0, 1.0); //left to right panning
+        currentTime += 100;
         let sound = loadSound('pitches/'+note.pitch+'.mp3');
         ellipse(width*(panning+1.0)/2, height/2, 80, 80);
-        sound.pan(panning);
-        sound.play();
+        C.pan(panning);
+        C.setLoop(true);
+        C.play();
+        console.log(panning);
     }
 }
 
 function keyPressed()
 {
-    if (keyCode == SPACE) {
+    if (keyCode == 32) {
         ellipse(0,20,40,40);
     }
     C.play(); 
