@@ -1,4 +1,4 @@
-var pitchList = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
+//var pitchList = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
 var pitchMap = {"C":0, "Db":1, "D":2, "Eb":3, "E":4, "F":5, "Gb":6, "G":7, "Ab":8, "A":9, "Bb":10, "B":11};
 var reversePitchMap = {0:"C", 1:"Db", 2:"D", 3:"Eb", 4:"E", 5:"F", 6:"Gb", 7:"G", 8:"Ab", 9:"A", 10:"Bb", 11:"B"};
 
@@ -10,9 +10,11 @@ var startTime = -1;
 var currentTime;
 var ding;
 var dang;
+var winSound;
 
 var threshold = 200; //Millisecond error threshold for pressing the note in time
 var score = 0;
+var winScore = 20;
 
 function preload()
 {
@@ -20,6 +22,7 @@ function preload()
     ding = loadSound("Sounds/ding.mp3");
     dang = loadSound("Sounds/dang.mp3");
     loadMap(beatmap);
+    winSound = loadSound("Sounds/win.mp3");
     console.log("preloaded");
 }
 
@@ -27,16 +30,20 @@ function setup()
 {
     createCanvas(800,400);
     background(0,0,0);
+    loadMap("map.json");
 }
 
 function draw()
 {
     background(0);
+    if (score >= winScore) {
+        winSound.play();
+    }
     if(startTime == -1)
     {
 
     }
-    else{
+    else if (startTime != -1) {
         currentTime = millis() - startTime;
         for(let i = 0; i < noteList.length; i++)
         {
@@ -102,8 +109,7 @@ function keyPressedWithPitches() //to replace keyPressed after we make sure thin
     if(startTime == -1)
     {
         startTime = millis();
-    }
-    else{
+    }else{
         let prevNote = null;
         if (prevNote != null) {
             prevPitch = pitchMap[prevNote.pitch];
