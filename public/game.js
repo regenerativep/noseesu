@@ -29,9 +29,19 @@ function draw()
     for(let i = 0; i < noteList.length; i++)
     {
         note = noteList[i];
-        if(note.time < currentTime+hearDistance && activeNotes)
+        let notActive = true;
+        for(let j = 0; j < activeNotes.length; j++)
         {
-            activeNotes.push({"time":note.time,"sound":loadSound('Sounds/Pitches/'+note.pitch+'.mp3')})
+            if(note.time==activeNotes[j].time)
+            {
+                notActive = false;
+            }
+        }
+        if(note.time < currentTime+hearDistance && notActive)
+        {
+            let activeNote = {"time":note.time,"sound":loadSound('Sounds/Pitches/'+note.pitch+'.mp3')};
+            activeNote.sound.playMode(sustain);
+            activeNotes.push(activeNote);
         }
     }
     for(let i = 0; i < activeNotes.length; i++)
