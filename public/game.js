@@ -1,4 +1,5 @@
 var hearDistance = 2000;
+var hitDistance = 100;
 var noteList = [];
 var currentTime;
 
