@@ -67,6 +67,7 @@ function draw()
             {
                 note = activeNotes[i];
                 let panning = map(note.time, currentTime, currentTime+hearDistance, -1.0, 1.0); //left to right panning
+                console.log(panning);
                 ellipse(width*(panning+1.0)/2, height/2, 80, 80);
                 note.sound.pan(panning);
                 note.sound.play();
