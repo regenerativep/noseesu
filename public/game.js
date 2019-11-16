@@ -35,8 +35,10 @@ function draw()
 
 function keyPressed()
 {
-    C.play();
-    ellipse(0,20,40,40);
+    if (keyCode == SPACE) {
+        ellipse(0,20,40,40);
+    }
+    C.play(); 
 }
 
 function loadMap(jsonStr)
