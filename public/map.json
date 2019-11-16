@@ -1,0 +1,46 @@
+var beatmap = {"notes": [
+  {
+    "time": 500,
+    "pitch": 0
+  },
+  {
+    "time": 1500,
+    "pitch": 2
+  },
+  {
+    "time": 3000,
+    "pitch": 3
+  },
+  {
+    "time": 4500,
+    "pitch": 1
+  },
+  {
+    "time": 5000,
+    "pitch": 3
+  },
+  {
+    "time": 6000,
+    "pitch": 5
+  },
+  {
+    "time": 6500,
+    "pitch": 2
+  },
+  {
+    "time": 7000,
+    "pitch": 7
+  },
+  {
+    "time": 8000,
+    "pitch": 5
+  },
+  {
+    "time": 8500,
+    "pitch": 8
+  },
+  {
+    "time": 11000,
+    "pitch": 1
+  }
+]}

@@ -1,6 +1,6 @@
 //var pitchList = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
 var pitchMap = {"C":0, "Db":1, "D":2, "Eb":3, "E":4, "F":5, "Gb":6, "G":7, "Ab":8, "A":9, "Bb":10, "B":11};
-//var reversePitchMap = {0:"C", 1:"Db", 2:"D", 3:"Eb", 4:"E", 5:"F", 6:"Gb", 7:"G", 8:"Ab", 9:"A", 10:"Bb", 11:"B"};
+var reversePitchMap = {0:"C", 1:"Db", 2:"D", 3:"Eb", 4:"E", 5:"F", 6:"Gb", 7:"G", 8:"Ab", 9:"A", 10:"Bb", 11:"B"};
 
 var hearDistance = 2000;
 var hitDistance = 100;
@@ -20,7 +20,8 @@ function preload()
 {
     soundFormats("mp3");
     ding = loadSound("Sounds/ding.mp3");
-    dang = loadSound("Sounds/dang.mp3")
+    dang = loadSound("Sounds/dang.mp3");
+    loadMap(beatmap);
     winSound = loadSound("Sounds/win.mp3");
     console.log("preloaded");
 }
@@ -34,8 +35,13 @@ function setup()
 
 function draw()
 {
+    background(0);
     if (score >= winScore) {
         winSound.play();
+    }
+    if(startTime == -1)
+    {
+
     }
     else if (startTime != -1) {
         currentTime = millis() - startTime;
@@ -52,9 +58,11 @@ function draw()
             }
             if(note.time < currentTime+hearDistance && notActive)
             {
-                let activeNote = {"time":note.time,"sound":loadSound('Sounds/Pitches/'+note.pitch+'.mp3')};
-                activeNote.sound.playMode('untilDone');
-                activeNotes.push(activeNote);
+                //let activeNote = {"time":note.time,"sound":loadSound('Sounds/Pitches/'+note.pitch+'.mp3')};
+
+                note.sound.playMode('untilDone');
+                activeNotes.push(note);
+                console.log(note.time+" "+note.pitch);
             }
         }
         for(let i = 0; i < activeNotes.length; i++)
@@ -78,17 +86,22 @@ function draw()
 
 function keyPressed()
 {
-    note = activeNotes[0];
-    if (keyCode == 32) {
-        if (Math.abs(note.time) - currentTime <= threshold) {
-            score++;
-            ding.play();
+    if(startTime == -1){
+        startTime = millis();
+    }
+    if (activeNotes.length > 0){
+        note = activeNotes[0];
+        if (keyCode == 32) {
+            if (Math.abs(note.time) - currentTime <= threshold) {
+                score++;
+                ding.play();
 
-        } else {
-            score--;
-            dang.play();
+            } else {
+                score--;
+                dang.play();
+            }
+            activeNotes.splice(0, 1);
         }
-        activeNotes.splice(0, 1);
     }
 }
 
@@ -125,11 +138,12 @@ function keyPressedWithPitches() //to replace keyPressed after we make sure thin
 
 function loadMap(jsonStr)
 {
-    let jsonObj = JSON.parse(jsonStr);
-    let noteList = jsonObj["notes"];
-    for(let i = 0; i < noteList.length; i++)
+    //let jsonObj = JSON.parse(jsonStr);
+    jsonObj = jsonStr;
+    let notes = jsonObj["notes"];
+    for(let i = 0; i < notes.length; i++)
     {
-        let note = noteList[i];
+        let note = notes[i];
         addNote(note);
     }
     currentTime = 0;
@@ -137,6 +151,8 @@ function loadMap(jsonStr)
 }
 function addNote(note)
 {
+    note.pitch = reversePitchMap[note.pitch];
+    note.sound = loadSound('Sounds/Pitches/'+note.pitch+'.mp3');
     noteList.push(note);
     noteList.sort((a,b) => {
         return Math.sign(a.time - b.time);
