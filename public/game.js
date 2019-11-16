@@ -1,3 +1,6 @@
+var noteList = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
+var C;
+
 var hearDistance = 2000;
 var hitDistance = 100;
 var noteList = [];
@@ -6,10 +9,13 @@ var currentTime;
 function preLoad()
 {
     soundFormats('mp3');
+    C = loadSound('Sounds/Pitches/C.mp3');
 }
 
 function setup()
 {
+    C.setLoop(true);
+    C.play();
     createCanvas(800,400);
     background(0,0,0);
 }
@@ -50,4 +56,8 @@ function addNote(note)
     noteList.sort((a,b) => {
         return Math.sign(a.time - b.time);
     });
+}
+
+function playNote(note) {
+    note.play();
 }
