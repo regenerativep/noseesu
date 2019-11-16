@@ -1,5 +1,5 @@
 var noteList = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
-//let C;
+var C;
 
 var hearDistance = 2000;
 var hitDistance = 100;
