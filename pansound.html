@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <script src="p5/p5.min.js"></script>
+        <script src="p5/addons/p5.sound.js"></script>
+        <script>
+            var sound;
+            function preload()
+            {
+                soundFormats("mp3");
+                sound = loadSound("./Sounds/Pitches/C.mp3");
+            }
+            function setup()
+            {
+                createCanvas(512, 512);
+                sound.setLoop(true);
+                sound.play();
+            }
+            function draw()
+            {
+                background(0);
+                noStroke();
+                fill(255);
+                ellipse(mouseX, height / 2, 32, 32);
+                sound.pan(mouseX / width * 2 - 1);
+            }
+        </script>
+    </head>
+    <body></body>
+</html>
