@@ -1,6 +1,7 @@
 var hearDistance = 2000;
 var noteList = [];
 var currentTime;
+
 function setup()
 {
     createCanvas(800,400);
@@ -8,11 +9,6 @@ function setup()
 }
 
 var noteList = [];
-
-function loadSong(song)
-{
-
-}
 
 function draw()
 {
