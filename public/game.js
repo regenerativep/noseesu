@@ -1,5 +1,4 @@
-var notes = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
-var C;
+var pitchList = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
 
 var hearDistance = 2000;
 var hitDistance = 100;
@@ -7,12 +6,15 @@ var noteList = [];
 var activeNotes = [];
 var startTime;
 var currentTime;
-var C;
+var ding;
+
+var threshold = 100; //Millisecond error threshold for pressing the note in time
+var score = 0;
 
 function preload()
 {
     soundFormats("mp3");
-    C = loadSound("Sounds/Pitches/C.mp3");
+    ding = loadSound("Sounds/Pitches/C.mp3");
     console.log("preloaded");
 }
 
@@ -29,9 +31,19 @@ function draw()
     for(let i = 0; i < noteList.length; i++)
     {
         note = noteList[i];
-        if(note.time < currentTime+hearDistance && activeNotes)
+        let notActive = true;
+        for(let j = 0; j < activeNotes.length; j++)
         {
-            activeNotes.push({"time":note.time,"sound":loadSound('Sounds/Pitches/'+note.pitch+'.mp3')})
+            if(note.time==activeNotes[j].time)
+            {
+                notActive = false;
+            }
+        }
+        if(note.time < currentTime+hearDistance && notActive)
+        {
+            let activeNote = {"time":note.time,"sound":loadSound('Sounds/Pitches/'+note.pitch+'.mp3')};
+            activeNote.sound.playMode(sustain);
+            activeNotes.push(activeNote);
         }
     }
     for(let i = 0; i < activeNotes.length; i++)
@@ -46,15 +58,12 @@ function draw()
 
 function keyPressed()
 {
+    note = activeNotes[0];
     if (keyCode == 32) {
-        C.play(); 
-        for (var i = 0; i < 1000; i++) {
-            console.log(i);
-            C.pan(i/500 - 1.0);
-            fill(0);
-            ellipse(i,20,40,40);
-            fill(255);
-            ellipse(i,20,40,40);
+        if(Math.abs(note.time) - currentTime <= threshold) {
+            score++;
+            activeNotes.splice(0, 1);
+
         }
     }
 }
