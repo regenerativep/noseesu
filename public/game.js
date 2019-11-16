@@ -23,48 +23,68 @@ function preload()
     dang = loadSound("Sounds/dang.mp3");
     let beatmapNotes = [
         {
-          "time": 500,
-          "pitch": 0
+          "time": -1000,
+          "pitch": 10
         },
         {
-          "time": 1500,
-          "pitch": 2
-        },
-        {
-          "time": 3000,
-          "pitch": 3
-        },
-        {
-          "time": 4500,
-          "pitch": 1
-        },
-        {
-          "time": 5000,
-          "pitch": 3
-        },
-        {
-          "time": 6000,
-          "pitch": 5
-        },
-        {
-          "time": 6500,
-          "pitch": 2
-        },
-        {
-          "time": 7000,
+          "time": 0,
           "pitch": 7
         },
         {
-          "time": 8000,
+          "time": 1000,
+          "pitch": 9
+        },
+        {
+          "time": 2000,
           "pitch": 5
         },
         {
-          "time": 8500,
+          "time": 3000,
+          "pitch": 7
+        },
+        {
+          "time": 4000,
+          "pitch": 3
+        },
+        {
+          "time": 5000,
+          "pitch": 2
+        },
+        {
+          "time": 6000,
           "pitch": 8
         },
         {
+          "time": 7000,
+          "pitch": 10
+        },
+        {
+          "time": 8000,
+          "pitch": 7
+        },
+        {
+          "time": 7000,
+          "pitch": 9
+        },
+        {
+          "time": 9000,
+          "pitch": 10
+        },
+        {
+          "time": 10000,
+          "pitch": 11
+        },
+        {
           "time": 11000,
-          "pitch": 1
+          "pitch": 7
+        },
+        {
+          "time": 12000,
+          "pitch": 9
+        },
+        {
+          "time": 13000,
+          "pitch": 5
         }
       ];
     for(let i = 0; i < beatmapNotes.length; i++)
