@@ -108,7 +108,7 @@ function draw()
         }
         for(let i = 0; i < activeNotes.length; i++)
         {
-            if(note.time < currentTime)
+            if(note.time < currentTime && note.isPressed == false) 
             {
                 activeNotes.splice(i,1);
             }
@@ -116,6 +116,7 @@ function draw()
             {
                 note = activeNotes[i];
                 let panning = map(note.time, currentTime, currentTime+hearDistance, -1.0, 1.0); //left to right panning
+                console.log(panning);
                 ellipse(width*(panning+1.0)/2, height/2, 80, 80);
                 note.sound.pan(panning);
                 note.sound.play();
@@ -151,6 +152,7 @@ function keyPressedWithPitches() //to replace keyPressed after we make sure thin
     {
         startTime = millis();
     }else{
+        activeNotes[1].lastNotePressed = true;
         let prevNote = null;
         if (prevNote != null) {
             prevPitch = pitchMap[prevNote.pitch];
@@ -195,6 +197,7 @@ function addNote(note)
     note.sound = loadSound('Sounds/Pitches/'+note.pitch+'.mp3');
     note.time += hearDistance;
     note.active = false;
+    note.lastNotePressed = false;
     noteList.push(note);
     noteList.sort((a,b) => {
         return Math.sign(a.time - b.time);
