@@ -112,12 +112,15 @@ function draw()
             {
                 note.sound.stop();
                 activeNotes.splice(i,1);
+                note.stop();
             }
             else
             {
                 note = activeNotes[i];
                 let panning = map(note.time, currentTime, currentTime+hearDistance, -1.0, 1.0); //left to right panning
-                console.log(panning);
+                //console.log("note.time: " + note.time);
+                //console.log("currentTime: " + currentTime);
+                console.log("Pan: " + panning);
                 ellipse(width*(panning+1.0)/2, height/2, 80, 80);
                 note.sound.pan(panning);
                 note.sound.play();
@@ -176,6 +179,7 @@ function keyPressedWithPitches() //to replace keyPressed after we make sure thin
             dang.play();
         }
         prevNote = note;
+        note.stop();
         activeNotes.splice(0, 1);
     }
 }
