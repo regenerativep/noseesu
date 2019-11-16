@@ -1,0 +1,22 @@
+{
+  "name": "noseesu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://regenerativep:c9a78bcfe2c2355c7442f16399413a4bcfe217b8@github.com/regenerativep/noseesu.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/regenerativep/noseesu/issues"
+  },
+  "homepage": "https://github.com/regenerativep/noseesu#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
