@@ -2,7 +2,7 @@
 var pitchMap = {"C":0, "Db":1, "D":2, "Eb":3, "E":4, "F":5, "Gb":6, "G":7, "Ab":8, "A":9, "Bb":10, "B":11};
 var reversePitchMap = {0:"C", 1:"Db", 2:"D", 3:"Eb", 4:"E", 5:"F", 6:"Gb", 7:"G", 8:"Ab", 9:"A", 10:"Bb", 11:"B"};
 
-var hearDistance = 5000;
+var hearDistance = 1000;
 var hitDistance = 100;
 var noteList = [];
 var activeNotes = [];
@@ -106,10 +106,11 @@ function draw()
                 note.active = true;
             }
         }
-        for(let i = 0; i < activeNotes.length; i++)
+        for(let i = activeNotes.length - 1; i >= 0; i--)
         {
-            if(note.time < currentTime && note.isPressed == false) 
+            if(note.time < currentTime) 
             {
+                note.sound.stop();
                 activeNotes.splice(i,1);
                 note.stop();
             }
@@ -144,6 +145,7 @@ function keyPressedOld()
                 score--;
                 dang.play();
             }
+            note.sound.stop();
             activeNotes.splice(0, 1);
         }
     }
