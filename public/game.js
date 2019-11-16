@@ -5,7 +5,7 @@ var hearDistance = 2000;
 var hitDistance = 100;
 var noteList = [];
 var activeNotes = [];
-var startTime;
+var startTime = -1;
 var currentTime;
 var ding;
 var dang;
@@ -25,43 +25,48 @@ function setup()
 {
     createCanvas(800,400);
     background(0,0,0);
-    startTime = millis(); //change this to wheneveer the actual game starts
 }
 
 function draw()
 {
-    currentTime = millis() - startTime;
-    for(let i = 0; i < noteList.length; i++)
+    if(startTime == -1)
     {
-        note = noteList[i];
-        let notActive = true;
-        for(let j = 0; j < activeNotes.length; j++)
+
+    }
+    else{
+        currentTime = millis() - startTime;
+        for(let i = 0; i < noteList.length; i++)
         {
-            if(note.time==activeNotes[j].time)
+            note = noteList[i];
+            let notActive = true;
+            for(let j = 0; j < activeNotes.length; j++)
             {
-                notActive = false;
+                if(note.time==activeNotes[j].time)
+                {
+                    notActive = false;
+                }
+            }
+            if(note.time < currentTime+hearDistance && notActive)
+            {
+                let activeNote = {"time":note.time,"sound":loadSound('Sounds/Pitches/'+note.pitch+'.mp3')};
+                activeNote.sound.playMode('untilDone');
+                activeNotes.push(activeNote);
             }
         }
-        if(note.time < currentTime+hearDistance && notActive)
+        for(let i = 0; i < activeNotes.length; i++)
         {
-            let activeNote = {"time":note.time,"sound":loadSound('Sounds/Pitches/'+note.pitch+'.mp3')};
-            activeNote.sound.playMode('untilDone');
-            activeNotes.push(activeNote);
-        }
-    }
-    for(let i = 0; i < activeNotes.length; i++)
-    {
-        if(note.time < currentTime)
-        {
-            activeNotes.splice(i,1);
-        }
-        else
-        {
-            note = activeNotes[i];
-            let panning = map(note.time, currentTime, currentTime+hearDistance, -1.0, 1.0); //left to right panning
-            ellipse(width*(panning+1.0)/2, height/2, 80, 80);
-            note.sound.pan(panning);
-            note.sound.play();
+            if(note.time < currentTime)
+            {
+                activeNotes.splice(i,1);
+            }
+            else
+            {
+                note = activeNotes[i];
+                let panning = map(note.time, currentTime, currentTime+hearDistance, -1.0, 1.0); //left to right panning
+                ellipse(width*(panning+1.0)/2, height/2, 80, 80);
+                note.sound.pan(panning);
+                note.sound.play();
+            }
         }
     }
 }
@@ -84,28 +89,34 @@ function keyPressed()
 
 function keyPressedWithPitches() //to replace keyPressed after we make sure things work
 {
-    let prevNote = null;
-    if (prevNote != null) {
-        prevPitch = pitchMap[prevNote.pitch];
-    } else {
-        prevPitch = null;
+    if(startTime == -1)
+    {
+        startTime = millis();
     }
-    note = activeNotes[0];
-    pitch = pitchMap[note.pitch]
-    if (Math.abs(note.time) - currentTime <= threshold) {
-        if (prevPitch == null || pitch == prevPitch && keyCode == 83 || pitch > prevPitch && keyCode == 68 || pitch < prevPitch && keyCode == 65) {
-            score++;
-            ding.play();
+    else{
+        let prevNote = null;
+        if (prevNote != null) {
+            prevPitch = pitchMap[prevNote.pitch];
+        } else {
+            prevPitch = null;
+        }
+        note = activeNotes[0];
+        pitch = pitchMap[note.pitch]
+        if (Math.abs(note.time) - currentTime <= threshold) {
+            if (prevPitch == null || pitch == prevPitch && keyCode == 83 || pitch > prevPitch && keyCode == 68 || pitch < prevPitch && keyCode == 65) {
+                score++;
+                ding.play();
+            } else {
+                score--;
+                dang.play();
+            }
         } else {
             score--;
             dang.play();
         }
-    } else {
-        score--;
-        dang.play();
+        prevNote = note;
+        activeNotes.splice(0, 1);
     }
-    prevNote = note;
-    activeNotes.splice(0, 1);
 }
 
 function loadMap(jsonStr)
