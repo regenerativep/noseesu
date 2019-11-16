@@ -128,7 +128,7 @@ function draw()
     }
 }
 
-function keyPressedOld()
+function keyPressed()
 {
     if(startTime == -1){
         startTime = millis();
@@ -149,7 +149,7 @@ function keyPressedOld()
     }
 }
 
-function keyPressed() //to replace keyPressed after we make sure things work
+function keyPressedWithPitches() //to replace keyPressed after we make sure things work
 {
     if(startTime == -1)
     {
