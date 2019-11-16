@@ -7,7 +7,24 @@
     <style> body {padding: 0; margin: 0;} </style>
     <script src="p5/p5.js"></script>
     <script src="p5/p5.sound.js"></script>
-    <script src="game.js"></script>
+    <script>
+      var noteList = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
+      var C;
+
+      function preLoad()
+      {
+          soundFormats('mp3');
+          C = loadSound('Sounds/Pitches/C.mp3');
+      }
+
+      function setup()
+      {
+          C.setLoop(true);
+          C.play();
+          createCanvas(800,400);
+          background(0,0,0);
+      }
+    </script>
   </head>
   <body>
   </body>
