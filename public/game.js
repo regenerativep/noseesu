@@ -1,3 +1,4 @@
+var noteList = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
 var hearDistance = 2000;
 var hitDistance = 100;
 var noteList = [];
