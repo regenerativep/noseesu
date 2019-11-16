@@ -1,4 +1,5 @@
 var pitchList = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
+var pitchMap = {"C":0, "Db":1, "D":2, "Eb":3, "E":4, "F":5, "Gb":6, "G":7, "Ab":8, "A":9, "Bb":10, "B":11};
 
 var hearDistance = 2000;
 var hitDistance = 100;
@@ -79,6 +80,32 @@ function keyPressed()
         }
         activeNotes.splice(0, 1);
     }
+}
+
+function keyPressedWithPitches() //to replace keyPressed after we make sure things work
+{
+    let prevNote = null;
+    if (prevNote != null) {
+        prevPitch = pitchMap[prevNote.pitch];
+    } else {
+        prevPitch = null;
+    }
+    note = activeNotes[0];
+    pitch = pitchMap[note.pitch]
+    if (Math.abs(note.time) - currentTime <= threshold) {
+        if (prevPitch == null || pitch == prevPitch && keyCode == 83 || pitch > prevPitch && keyCode == 68 || pitch < prevPitch && keyCode == 65) {
+            score++;
+            ding.play();
+        } else {
+            score--;
+            dang.play();
+        }
+    } else {
+        score--;
+        dang.play();
+    }
+    prevNote = note;
+    activeNotes.splice(0, 1);
 }
 
 function loadMap(jsonStr)
