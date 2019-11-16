@@ -1,4 +1,5 @@
 var hearDistance = 2000;
+var hitDistance = 100;
 var noteList = [];
 var currentTime;
 
@@ -18,9 +19,9 @@ function draw()
     for(let i = 0; i < noteList.length; i++)
     {
         note = noteList[i];
-        let panning = map(note.time, 0, width, -1.0, 1.0);
+        let panning = map(note.time, currentTime, currentTime+hearDistance, -1.0, 1.0); //left to right panning
         let sound = loadSound('pitches/'+note.pitch+'.mp3');
-        ellipse(note.time, 50, 80, 80);
+        ellipse(width*(panning+1.0)/2, height/2, 80, 80);
         sound.pan(panning);
         sound.play();
     }
