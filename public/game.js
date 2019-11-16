@@ -9,14 +9,14 @@ var currentTime;
 var ding;
 var dang;
 
-var threshold = 100; //Millisecond error threshold for pressing the note in time
+var threshold = 200; //Millisecond error threshold for pressing the note in time
 var score = 0;
 
 function preload()
 {
     soundFormats("mp3");
-    ding = loadSound("Sounds/Pitches/C.mp3");
-    dang = loadSound("Sounds/Pitches/dang.mp3")
+    ding = loadSound("Sounds/ding.mp3");
+    dang = loadSound("Sounds/dang.mp3")
     console.log("preloaded");
 }
 
@@ -44,7 +44,7 @@ function draw()
         if(note.time < currentTime+hearDistance && notActive)
         {
             let activeNote = {"time":note.time,"sound":loadSound('Sounds/Pitches/'+note.pitch+'.mp3')};
-            activeNote.sound.playMode(sustain);
+            activeNote.sound.playMode('untilDone');
             activeNotes.push(activeNote);
         }
     }
