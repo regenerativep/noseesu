@@ -4,6 +4,13 @@ function setup()
     background(0,0,0);
 }
 
+var noteList = [];
+
+function loadSong(song)
+{
+
+}
+
 function draw()
 {
     for(let i = 0; i < noteList.length; i++)
