@@ -5,17 +5,17 @@ var hearDistance = 2000;
 var hitDistance = 100;
 var noteList = [];
 var currentTime;
+var C;
 
-function preLoad()
+function preload()
 {
-    soundFormats('mp3');
-    C = loadSound('Sounds/Pitches/C.mp3');
+    soundFormats("mp3");
+    C = loadSound("Sounds/Pitches/C.mp3");
+    console.log("preloaded");
 }
 
 function setup()
 {
-    C.setLoop(true);
-    C.play();
     createCanvas(800,400);
     background(0,0,0);
 }
@@ -35,6 +35,7 @@ function draw()
 
 function keyPressed()
 {
+    C.play();
     ellipse(0,20,40,40);
 }
 
