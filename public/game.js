@@ -7,6 +7,7 @@ var activeNotes = [];
 var startTime;
 var currentTime;
 var ding;
+var incorrect;
 
 var threshold = 100; //Millisecond error threshold for pressing the note in time
 var score = 0;
@@ -14,7 +15,8 @@ var score = 0;
 function preload()
 {
     soundFormats("mp3");
-    ding = loadSound("Sounds/Pitches/C.mp3");
+    ding = loadSound("Sounds/ding.mp3");
+    incorrect = loadSound("Sounds/incorrect.mp3");
     console.log("preloaded");
 }
 
@@ -67,10 +69,13 @@ function keyPressed()
 {
     note = activeNotes[0];
     if (keyCode == 32) {
+        activeNotes.splice(0, 1);
         if(Math.abs(note.time) - currentTime <= threshold) {
             score++;
-            activeNotes.splice(0, 1);
-
+            ding.play();
+        } else {
+            score--;
+            incorrect.play();
         }
     }
 }
