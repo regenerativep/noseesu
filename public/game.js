@@ -6,7 +6,7 @@ var hitDistance = 100;
 var noteList = [];
 var currentTime;
 
-function preLoad()
+function preload()
 {
     soundFormats('mp3');
     C = loadSound('Sounds/Pitches/C.mp3');
