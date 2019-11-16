@@ -10,15 +10,18 @@ var startTime = -1;
 var currentTime;
 var ding;
 var dang;
+var winSound;
 
 var threshold = 200; //Millisecond error threshold for pressing the note in time
 var score = 0;
+var winScore = 20;
 
 function preload()
 {
     soundFormats("mp3");
     ding = loadSound("Sounds/ding.mp3");
     dang = loadSound("Sounds/dang.mp3")
+    winSound = loadSound("Sounds/win.mp3");
     console.log("preloaded");
 }
 
@@ -26,15 +29,15 @@ function setup()
 {
     createCanvas(800,400);
     background(0,0,0);
+    loadMap("map.json");
 }
 
 function draw()
 {
-    if(startTime == -1)
-    {
-
+    if (score >= winScore) {
+        winSound.play();
     }
-    else{
+    else if (startTime != -1) {
         currentTime = millis() - startTime;
         for(let i = 0; i < noteList.length; i++)
         {
@@ -93,8 +96,7 @@ function keyPressedWithPitches() //to replace keyPressed after we make sure thin
     if(startTime == -1)
     {
         startTime = millis();
-    }
-    else{
+    }else{
         let prevNote = null;
         if (prevNote != null) {
             prevPitch = pitchMap[prevNote.pitch];
