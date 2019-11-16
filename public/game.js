@@ -2,7 +2,7 @@
 var pitchMap = {"C":0, "Db":1, "D":2, "Eb":3, "E":4, "F":5, "Gb":6, "G":7, "Ab":8, "A":9, "Bb":10, "B":11};
 var reversePitchMap = {0:"C", 1:"Db", 2:"D", 3:"Eb", 4:"E", 5:"F", 6:"Gb", 7:"G", 8:"Ab", 9:"A", 10:"Bb", 11:"B"};
 
-var hearDistance = 2000;
+var hearDistance = 5000;
 var hitDistance = 100;
 var noteList = [];
 var activeNotes = [];
@@ -21,7 +21,57 @@ function preload()
     soundFormats("mp3");
     ding = loadSound("Sounds/ding.mp3");
     dang = loadSound("Sounds/dang.mp3");
-    loadMap(beatmap);
+    let beatmapNotes = [
+        {
+          "time": 500,
+          "pitch": 0
+        },
+        {
+          "time": 1500,
+          "pitch": 2
+        },
+        {
+          "time": 3000,
+          "pitch": 3
+        },
+        {
+          "time": 4500,
+          "pitch": 1
+        },
+        {
+          "time": 5000,
+          "pitch": 3
+        },
+        {
+          "time": 6000,
+          "pitch": 5
+        },
+        {
+          "time": 6500,
+          "pitch": 2
+        },
+        {
+          "time": 7000,
+          "pitch": 7
+        },
+        {
+          "time": 8000,
+          "pitch": 5
+        },
+        {
+          "time": 8500,
+          "pitch": 8
+        },
+        {
+          "time": 11000,
+          "pitch": 1
+        }
+      ];
+    for(let i = 0; i < beatmapNotes.length; i++)
+    {
+        addNote(beatmapNotes[i]);
+    }
+    //loadMap(beatmap);
     winSound = loadSound("Sounds/win.mp3");
     console.log("preloaded");
 }
@@ -30,7 +80,6 @@ function setup()
 {
     createCanvas(800,400);
     background(0,0,0);
-    loadMap("map.json");
 }
 
 function draw()
@@ -48,21 +97,13 @@ function draw()
         for(let i = 0; i < noteList.length; i++)
         {
             note = noteList[i];
-            let notActive = true;
-            for(let j = 0; j < activeNotes.length; j++)
-            {
-                if(note.time==activeNotes[j].time)
-                {
-                    notActive = false;
-                }
-            }
-            if(note.time < currentTime+hearDistance && notActive)
+            if(note.time < currentTime+hearDistance && !note.active)
             {
                 //let activeNote = {"time":note.time,"sound":loadSound('Sounds/Pitches/'+note.pitch+'.mp3')};
 
                 note.sound.playMode('untilDone');
                 activeNotes.push(note);
-                console.log(note.time+" "+note.pitch);
+                note.active = true;
             }
         }
         for(let i = 0; i < activeNotes.length; i++)
@@ -152,6 +193,8 @@ function addNote(note)
 {
     note.pitch = reversePitchMap[note.pitch];
     note.sound = loadSound('Sounds/Pitches/'+note.pitch+'.mp3');
+    note.time += hearDistance;
+    note.active = false;
     noteList.push(note);
     noteList.sort((a,b) => {
         return Math.sign(a.time - b.time);
