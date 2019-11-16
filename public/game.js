@@ -12,58 +12,46 @@ var ding;
 var dang;
 var winSound;
 
-var threshold = 200; //Millisecond error threshold for pressing the note in time
+var threshold = 300; //Millisecond error threshold for pressing the note in time
 var score = 0;
 var winScore = 20;
 
 function preload()
 {
     soundFormats("mp3");
-    ding = loadSound("Sounds/ding.mp3");
+    ding = loadSound("Sounds/old_ding.mp3");
     dang = loadSound("Sounds/dang.mp3");
     let beatmapNotes = [
         {
-          "time": -1000,
-          "pitch": 10
-        },
-        {
-          "time": 0,
-          "pitch": 7
-        },
-        {
           "time": 1000,
-          "pitch": 9
+          "pitch": 10
         },
         {
           "time": 2000,
-          "pitch": 5
+          "pitch": 7
         },
         {
           "time": 3000,
-          "pitch": 7
+          "pitch": 9
         },
         {
           "time": 4000,
-          "pitch": 3
+          "pitch": 5
         },
         {
           "time": 5000,
-          "pitch": 2
-        },
-        {
-          "time": 6000,
-          "pitch": 8
-        },
-        {
-          "time": 7000,
-          "pitch": 10
-        },
-        {
-          "time": 8000,
           "pitch": 7
         },
         {
+          "time": 6000,
+          "pitch": 3
+        },
+        {
           "time": 7000,
+          "pitch": 2
+        },
+        {
+          "time": 8000,
           "pitch": 9
         },
         {
@@ -72,18 +60,30 @@ function preload()
         },
         {
           "time": 10000,
-          "pitch": 11
-        },
-        {
-          "time": 11000,
           "pitch": 7
         },
         {
-          "time": 12000,
+          "time": 11000,
           "pitch": 9
         },
         {
+          "time": 12000,
+          "pitch": 10
+        },
+        {
           "time": 13000,
+          "pitch": 11
+        },
+        {
+          "time": 14000,
+          "pitch": 7
+        },
+        {
+          "time": 15000,
+          "pitch": 9
+        },
+        {
+          "time": 16000,
           "pitch": 5
         }
       ];
@@ -105,6 +105,8 @@ function setup()
 function draw()
 {
     background(0);
+    fill(255);
+    text(score,20,20);
     if (score >= winScore) {
         winSound.play();
     }
@@ -116,7 +118,7 @@ function draw()
         currentTime = millis() - startTime;
         for(let i = 0; i < noteList.length; i++)
         {
-            note = noteList[i];
+            let note = noteList[i];
             if(note.time < currentTime+hearDistance && !note.active)
             {
                 //let activeNote = {"time":note.time,"sound":loadSound('Sounds/Pitches/'+note.pitch+'.mp3')};
@@ -128,21 +130,29 @@ function draw()
         }
         for(let i = activeNotes.length - 1; i >= 0; i--)
         {
+            let note = activeNotes[i];
             if(note.time < currentTime) 
             {
                 note.sound.stop();
                 activeNotes.splice(i,1);
-                note.stop();
+                score--;
+                dang.setVolume(0.2);
+                dang.play();
+                //note.stop();
             }
             else
             {
                 note = activeNotes[i];
-                let panning = map(note.time, currentTime, currentTime+hearDistance, -1.0, 1.0); //left to right panning
+                let panning = map(note.time, currentTime, currentTime+hearDistance, -1.4, 1.0); //left to right panning
+                if(panning > 1) panning = 1
+                if(panning < -1) panning = -1
+                let volume = map(note.time, currentTime, currentTime+hearDistance, 0, 1.0);
                 //console.log("note.time: " + note.time);
                 //console.log("currentTime: " + currentTime);
                 console.log("Pan: " + panning);
                 ellipse(width*(panning+1.0)/2, height/2, 80, 80);
                 note.sound.pan(panning);
+                note.sound.setVolume(1-volume);
                 note.sound.play();
             }
         }
@@ -159,10 +169,12 @@ function keyPressedOld()
         if (keyCode == 32) {
             if (Math.abs(note.time) - currentTime <= threshold) {
                 score++;
+                ding.setVolume(0.1);
                 ding.play();
 
             } else {
                 score--;
+                dang.setVolume(0.2);
                 dang.play();
             }
             note.sound.stop();
@@ -221,6 +233,7 @@ function addNote(note)
 {
     note.pitch = reversePitchMap[note.pitch];
     note.sound = loadSound('Sounds/Pitches/'+note.pitch+'.mp3');
+    note.time *= 3;
     note.time += hearDistance;
     note.active = false;
     note.lastNotePressed = false;

@@ -1,5 +1,6 @@
 {"noteList": [
   {
+<<<<<<< HEAD
     "time": -1000,
     "pitch": 10
   },
@@ -66,5 +67,65 @@
   {
     "time": 14000,
     "pitch": 3
+=======
+    "time": 0,
+    "pitch": 2
+  },
+  {
+    "time": 250,
+    "pitch": 11
+  },
+  {
+    "time": 500,
+    "pitch": 0
+  },
+  {
+    "time": 750,
+    "pitch": 8
+  },
+  {
+    "time": 1000,
+    "pitch": 8
+  },
+  {
+    "time": 1250,
+    "pitch": 0
+  },
+  {
+    "time": 1500,
+    "pitch": 2
+  },
+  {
+    "time": 1750,
+    "pitch": 11
+  },
+  {
+    "time": 2000,
+    "pitch": 2
+  },
+  {
+    "time": 2250,
+    "pitch": 11
+  },
+  {
+    "time": 2500,
+    "pitch": 0
+  },
+  {
+    "time": 2750,
+    "pitch": 8
+  },
+  {
+    "time": 3000,
+    "pitch": 8
+  },
+  {
+    "time": 3250,
+    "pitch": 0
+  },
+  {
+    "time": 3500,
+    "pitch": 5
+>>>>>>> 0a2df72f59020753d927a12f80c0ad5c7d61e795
   }
 ]}
