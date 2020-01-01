@@ -27,64 +27,72 @@ function preload()
           "pitch": 10
         },
         {
+          "time": 1250,
+          "pitch": 7
+        },
+        {
+          "time": 1500,
+          "pitch": 9
+        },
+        {
+          "time": 1750,
+          "pitch": 5
+        },
+        {
           "time": 2000,
           "pitch": 7
         },
         {
-          "time": 3000,
-          "pitch": 9
-        },
-        {
-          "time": 4000,
-          "pitch": 5
-        },
-        {
-          "time": 5000,
-          "pitch": 7
-        },
-        {
-          "time": 6000,
+          "time": 2250,
           "pitch": 3
         },
         {
-          "time": 7000,
+          "time": 2500,
           "pitch": 2
         },
         {
-          "time": 8000,
+          "time": 2750,
           "pitch": 9
         },
         {
-          "time": 9000,
+          "time": 3000,
           "pitch": 10
         },
         {
-          "time": 10000,
+          "time": 3250,
           "pitch": 7
         },
         {
-          "time": 11000,
+          "time": 3500,
           "pitch": 9
         },
         {
-          "time": 12000,
+          "time": 3750,
           "pitch": 10
         },
         {
-          "time": 13000,
+          "time": 4000,
           "pitch": 11
         },
         {
-          "time": 14000,
+          "time": 4250,
           "pitch": 7
         },
         {
-          "time": 15000,
+          "time": 4500,
           "pitch": 9
         },
         {
-          "time": 16000,
+          "time": 4750,
           "pitch": 5
+        },
+        {
+            "time": 4850,
+            "pitch": 7
+        },
+        {
+            "time": 4950,
+            "pitch": 10
         }
       ];
     for(let i = 0; i < beatmapNotes.length; i++)
@@ -104,9 +112,10 @@ function setup()
 
 function draw()
 {
-    background(0);
-    fill(255);
-    text(score,20,20);
+    background(200,200,255);
+    fill(0);
+    textSize(30);
+    text(score,20,40);
     if (score >= winScore) {
         winSound.play();
     }
@@ -169,7 +178,7 @@ function keyPressed()
         if (keyCode == 32) {
             if (Math.abs(note.time) - currentTime <= threshold) {
                 score++;
-                ding.setVolume(0.1);
+                ding.setVolume(0.08);
                 ding.play();
 
             } else {
@@ -183,7 +192,7 @@ function keyPressed()
     }
 }
 
-function keyPressedOld() //to replace keyPressed after we make sure things work
+function newkeyPressed() //to replace keyPressed after we make sure things work
 {
     if(startTime == -1)
     {
